@@ -139,7 +139,7 @@ footer:
       url: "https://www.facebook.com/profile.php?id=100001676894394"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      url: "https://github.com/zzu0203"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
