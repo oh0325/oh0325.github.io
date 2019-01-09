@@ -298,9 +298,9 @@ defaults:
       layout: single
       author_profile: true
   
-  sidebar:
-    - title: "Test"
-      text: "test"
-    - title: "Another Title"
-      text: "other title"
+sidebar:
+  - title: "Test"
+    text: "test"
+  - title: "Another Title"
+    text: "other title"
   
