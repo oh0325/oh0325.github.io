@@ -1,11 +1,11 @@
 ---
 layout: archive
-title: "Posts by 그 외"
-permalink: /categories/etc
+title: "Posts by Papers"
+permalink: /categories/Papers
 author_profile: true
 ---
 {% for category in site.categories %}
-  {% if category[0] == "그 외" %}
+  {% if category[0] == "Papers" %}
     {% for post in category[1] %}
       {% include archive-single.html type=list %}
     {% endfor %}

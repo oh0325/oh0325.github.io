@@ -12,14 +12,14 @@ main:
   #   url: /sitemap/
 sidebar-blog:
   - title: "DeepLearning"
-    url: /
+    url: "/categories/DeepLearning"
   - title: "Papers"
-    url: "/_posts/Papers"
+    url: "/categories/Papers"
   - title: "Python"
     url: "/categories/python"
   - title: "그 외"
     url: "/categories/etc"
   - title: "알고리즘 문제 풀이"
-    url: "/_posts/알고리즘 문제 풀이"
+    url: "/categories/algorithm"
   - title: "필기노트"
-    url: "/_posts/필기노트"
+    url: "/categories/note"
