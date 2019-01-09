@@ -17,6 +17,8 @@ sidebar-blog:
     url: "/categories/DeepLearning"
   - title: "Papers"
     url: "/categories/Papers"
+  - title: "영상처리"
+    url: "/categories/imgprocessing"
   - title: "알고리즘 문제 풀이"
     url: "/categories/algorithm"
   - title: "필기노트"
