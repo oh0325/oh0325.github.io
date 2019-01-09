@@ -285,7 +285,7 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: false
       read_time: true
       comments: # true
       share: true
@@ -298,6 +298,9 @@ defaults:
       layout: single
       author_profile: true
   
-  
-  
+  sidebar:
+    - title: "Test"
+      text: "test"
+    - title: "Another Title"
+      text: "other title"
   
