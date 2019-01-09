@@ -128,6 +128,7 @@ author:
       icon: "fab fa-fw fa-instagram"
       url: "https://www.instagram.com/zzu02_03/"
 
+
 # Site Footer
 footer:
   links:
@@ -290,6 +291,9 @@ defaults:
       comments: # true
       share: true
       related: true
+      sidebar:
+        nav: "sidebar-blog"
+
   #_pages
   - scope:
       path: "_pages"
@@ -297,10 +301,5 @@ defaults:
     values:
       layout: single
       author_profile: true
-  
-sidebar:
-  - title: "Test"
-    text: "test"
-  - title: "Another Title"
-    text: "other title"
-  
+      sidebar:
+        nav: "sidebar-blog"

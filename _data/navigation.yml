@@ -1,14 +1,25 @@
 # main links
 main:
-  - title: "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "About"
-    url: https://mmistakes.github.io/minimal-mistakes/about/
-  - title: "Sample Posts"
-    url: /_posts/
+    url: /about/
   - title: "Category"
     url: /categories/
+  - title: "Tags"
+    url: /tags/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+sidebar-blog:
+  - title: "DeepLearning"
+    url: /
+  - title: "Papers"
+    url: "/_posts/Papers"
+  - title: "Python"
+    url: "/categories/python"
+  - title: "그 외"
+    url: "/categories/etc"
+  - title: "알고리즘 문제 풀이"
+    url: "/_posts/알고리즘 문제 풀이"
+  - title: "필기노트"
+    url: "/_posts/필기노트"

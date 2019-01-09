@@ -2,7 +2,12 @@
 layout: posts
 title: '[Python] 실행시간 측정 방법'
 excerpt_separator: "<!--more-->"
-tags: [jeykll, github, python]
+categories:
+  - Python
+tags:
+  - jeykll
+  - github
+  - python
 ---
 ## Python 실행시간 측정 방법
 ##### 우선 코드를 먼저 확인하겠습니다.
