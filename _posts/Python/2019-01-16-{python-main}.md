@@ -5,6 +5,9 @@ categories:
   - Python
 tags:
   - python
+comments: true  
+classes: wide
+toc: true
 ---
 ## | `if __name__=="__main__" :` 의 역할
 

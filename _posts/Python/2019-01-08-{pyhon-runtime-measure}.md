@@ -8,6 +8,9 @@ tags:
   - jeykll
   - github
   - python
+comments: true  
+classes: wide
+toc: true  
 ---
 ## Python 실행시간 측정 방법
 
