@@ -27,5 +27,3 @@ sidebar-blog:
     url: "/categories/note"
   - title: "그 외"
     url: "/categories/etc"
-  - title: "TEST"
-    url: "/categories/TEST"
