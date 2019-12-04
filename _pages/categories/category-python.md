@@ -3,6 +3,7 @@ layout: archive
 title: "Posts by Python"
 permalink: /categories/python
 author_profile: true
+toc: true
 ---
 {% for category in site.categories %}
   {% if category[0] == "Python" %}

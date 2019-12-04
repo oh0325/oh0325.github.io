@@ -3,6 +3,7 @@ layout: archive
 title: "Posts by Blog"
 permalink: /categories/Blog
 author_profile: true
+toc: true
 ---
 {% for category in site.categories %}
   {% if category[0] == "Blog" %}
