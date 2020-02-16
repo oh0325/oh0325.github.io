@@ -6,7 +6,7 @@ author_profile: true
 toc: true
 ---
 {% for category in site.categories %}
-  {% if category[0] == "그 외" %}
+  {% if category[0] == "etc" %}
     {% for post in category[1] %}
       {% include archive-single.html type=list %}
     {% endfor %}
