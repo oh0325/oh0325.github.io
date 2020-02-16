@@ -282,7 +282,7 @@ compress_html:
 defaults:
   # _posts
   - scope:
-      path: ""
+      path: "_posts"
       type: posts
     values:
       layout: single
@@ -292,7 +292,7 @@ defaults:
       share: true
       related: true
       sidebar:
-        nav: "sidebar-blog"
+        nav: "docs"
 
   #_pages
   - scope:
@@ -302,4 +302,4 @@ defaults:
       layout: single
       author_profile: true
       sidebar:
-        nav: "sidebar-blog"
+        nav: "docs"
