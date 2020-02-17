@@ -5,6 +5,6 @@ categories:
   - Blog
 classes: wide
 comments: true
-toc: true
+toc: false
 ---
 ## 댓글댓글댓댓eot
