@@ -1,5 +1,5 @@
 ---
-layout: posts
+layout: single
 title: "댓글생기는가"
 categories:
   - Blog

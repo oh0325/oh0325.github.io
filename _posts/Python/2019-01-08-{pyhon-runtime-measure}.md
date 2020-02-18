@@ -1,5 +1,5 @@
 ---
-layout: posts
+layout: single
 title: '[Python] 실행시간 측정 방법'
 excerpt_separator: "<!--more-->"
 categories:
