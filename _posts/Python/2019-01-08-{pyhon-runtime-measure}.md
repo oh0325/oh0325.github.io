@@ -10,7 +10,7 @@ tags:
   - python
 comments: true  
 classes: wide
-toc: true  
+toc: false  
 ---
 ## Python 실행시간 측정 방법
 
