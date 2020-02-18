@@ -7,7 +7,7 @@ tags:
   - python
 comments: true  
 classes: wide
-toc: true
+toc: false
 ---
 ## | `if __name__=="__main__" :` 의 역할
 
