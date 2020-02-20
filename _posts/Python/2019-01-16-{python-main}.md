@@ -1,6 +1,6 @@
 ---
 layout: single
-title: '[Python] if __name__=="__main__:"의 역할!'
+title: '[Python] if __name__=="__main__":의 역할!'
 categories:
   - Python
 tags:
