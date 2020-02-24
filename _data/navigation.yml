@@ -6,10 +6,6 @@ main:
     url: /categories/
   - title: "Tags"
     url: /tags/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
 docs:
   - title: "Python"
     url: "/categories/python"
