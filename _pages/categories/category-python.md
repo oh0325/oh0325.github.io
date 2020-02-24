@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Posts by Python"
-permalink: /categories/pythonnnn
+permalink: /categories/python
 author_profile: true
 toc: true
 ---
