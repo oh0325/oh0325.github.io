@@ -30,7 +30,7 @@ toc = time.time()
 print(toc - tic)
 ```
 * `import time`으로 `time`모듈을 `import`
-* `time.time()` : 1970년 1월 1일 자정 이후로 누적된 초를 float 단위로 반환하는 함수!
+* `time.time()` : 1970년 1월 1일 자정 이후로 누적된 초를 float 단위로 반환하는 함수
 * `tic`이라는 변수에 시작시간을 저장
 * `toc`에는 프로그램이 끝나는 시간을 저장
 * `toc - tic`을 통해 실행시간을 측정  
