@@ -18,7 +18,7 @@ toc: false
 
 ![wgan algorithm](/assets/images/wgan_algo.PNG)
 
-알고리즘을 보면 parameter 값으로 learning rate ($ \alpha $) = 0.00005, clipping parameter (c) = 0.01, batch size (m) = 64, n~critic~ = 5를 사용했습니다.
+알고리즘을 보면 parameter 값으로 learning rate ($\alpha$) = 0.00005, clipping parameter ($c$) = 0.01, batch size ($m$) = 64, $n$<sub>critic</sub> = 5를 사용했습니다.
 
 ---
 ### Dependencies
