@@ -21,10 +21,44 @@ toc: false
 
 데이터셋은 mnist dataset을 사용했으며 추후 다른 데이터 셋에 대해 실험한 결과를 추가하도록 하겠습니다. 
 
+
+
+---
+### Module Import
+tensorflow, keras, numpy 등 필요한 모듈을 불러옵니다.
+
+```python
+import tensorflow as tf
+import tensorflow.keras as keras
+from tensorflow.keras import layers, Model
+# import tensorflow.keras.preprocessing.image as prep 
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras import backend as K
+
+import os
+import time
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+from models import Generator_mnist, Discriminator_mnist # models.py 에 있는 model(G, D) load
+from functions import g_loss, d_loss            # functions.py 에 있는 loss functions load
+```
+---
+### Set Parameter
 알고리즘을 보면 parameter 값으로 learning rate ($\alpha$) = 0.00005, clipping parameter ($c$) = 0.01, batch size ($m$) = 64, $n$<sub>critic</sub> = 5를 사용했습니다.
 
-
-
+따라서 같은 값으로 parameter들을 설정합니다.
+```python
+learning_rate = 0.00005 # alpha
+c = 0.01                # clipping parameter
+n = 5                   # n_critic
+epochs = 50
+batch_size = 64
+noise_dim = 100
+num_examples_to_generate = 16
+BUFFER_SIZE = 60000     # mnist buffer size
+```
 ---
 ### Dependencies
 ```
