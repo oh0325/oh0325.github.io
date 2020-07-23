@@ -79,7 +79,7 @@ mnist dataset은 숫자 0~9까지 60000개의 (28, 28, 1) shape을 갖는 흑백
 불러온 6만장의 train_images는 (60000, 28, 28)의 shape을 하고 있으므로 마지막에 채널을 추가하기 위해 (60000, 28, 28, 1)의 shape으로 reshape을 합니다.
 Generator의 마지막 activation function을 tanh로 사용했기에 image의 값을 [-1, 1]로 normalization 해줍니다. 
 
-이렇게 얻어진 train_images를 tensorflow에서 지원하는 tf.data.Dataset을 사용해 batch 별로 Dataset object를 만들어 줍니다.
+이렇게 얻어진 train_images를 tensorflow에서 지원하는 tf.data.Dataset을 사용해 batch 별로 Dataset object를 만들어줍니다.
 
 ---
 ### Model(G, D) Load & Summary
@@ -98,9 +98,39 @@ realout = D(input2)
 G.summary()
 D.summary()
 ```
-summary한 결과는 다음과 같이 나온다. Generator는 약 228만개의 parameter, Discriminator는 1080만개의 parameter를 갖는다. 
+summary한 결과는 다음과 같이 나옵니다. Generator는 약 228만개의 parameter, Discriminator는 약 1080만개의 parameter를 갖습니다. 
 
 ![model_g summary results](/assets/images/g_summary.PNG){: width="48%"}{: .center} ![model_d summary results](/assets/images/d_summary.PNG){: width="48%"}{: .center}
+
+---
+### Optimizer - RMSProp
+논문의 알고리즘에 따르면 네트워크의 weights를 업데이트할 때 Optimizer로 RMSProp을 사용합니다. 따라서 다음과 같이 코드를 적어줍니다. 
+
+```python
+generator_optimizer = keras.optimizers.RMSprop(learning_rate)
+discriminator_optimizer = keras.optimizers.RMSprop(learning_rate)
+```
+[케라스 홈페이지](https://keras.io/ko/optimizers/)에 따르면 RMSProp optimizer는 lr 기본값으로 0.001을 가집니다. 하지만, 알고리즘에 따라 lr 값을 0.00005로 적용시켜줍니다.
+
+---
+### Loss Functions
+논문에 따라 ${x^{(i)}}$는 real data distribution으로부터 온 data sample이며 ${z^{(i)}}$는 latent vector입니다. 따라서 $f_{w}(x^{(i)})$는 critic(=discriminator)에 real sample을 넣은 결과값, $f_{w}(g_{\theta}(z^{(i)}))$는 critic에 generator가 만들어낸 fake sample을 넣은 결과값이 됩니다.
+
+따라서 loss function에 대한 코드는 다음과 같습니다. d_loss는 real_output에 대한 mean 값과 fake_output에 대한 mean 값의 차이이며 g_loss는 fake_output에 대한 mean 값이 됩니다. 각 loss function은 functions.py 에 정의되어 있습니다.
+
+```python
+def d_loss(real_output, fake_output):
+    loss = K.mean(real_output) - K.mean(fake_output)
+    
+    return loss
+
+def g_loss(fake_output):
+    loss = K.mean(fake_output)
+
+    return loss
+```
+
+---
 
 ---
 ### Checkpoint Setting
