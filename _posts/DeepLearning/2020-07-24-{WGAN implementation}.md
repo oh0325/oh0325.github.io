@@ -93,7 +93,7 @@ D.summary()
 ```
 summary한 결과는 다음과 같이 나온다. Generator는 약 228만개의 parameter, Discriminator는 1080만개의 parameter를 갖는다. 
 
-![model_g summary results](/assets/images/g_summary.PNG){: width="50%"}{: .left} ![model_d summary results](/assets/images/d_summary.PNG){: width="50%"}{: .right}
+![model_g summary results](/assets/images/g_summary.PNG){: width="48%"}{: .center} ![model_d summary results](/assets/images/d_summary.PNG){: width="48%"}{: .center}
 
 ---
 ### Dependencies
