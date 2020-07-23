@@ -22,8 +22,8 @@ toc: false
 이제 코드와 함께 설명을 하도록 하겠습니다.
 {% capture title_url %}
 
-- 학습은 jupyter notebook 가상환경에서 진행했습니다!
-- 포스트 하단에 dependency에 대한 내용이 있습니다!
+- 학습은 **jupyter notebook** 가상환경에서 진행했습니다!
+- 포스트 하단에 **dependency**에 대한 내용이 있습니다!
 
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
@@ -104,7 +104,19 @@ summary한 결과는 다음과 같이 나온다. Generator는 약 228만개의 p
 
 ---
 ### Checkpoint Setting
-학습 중간중간 일정 epoch마다 
+학습 중간중간 일정 epoch마다 모델을 저장하기 위해 checkpoint를 setting합니다.
+
+```python
+checkpoint_dir = './training_checkpoints'
+checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
+                                 discriminator_optimizer=discriminator_optimizer,
+                                 G=G,
+                                 D=D)
+```
+checkpoint를 저장 할 directory를 변수 checkpoint_dir에 적어주면 됩니다. 
+
+##### 추후 checkpoint save, restore 그리고 tensorboard 사용 등에 대해서도 자세히 다루도록 하겠습니다!!
 
 ---
 ### Dependencies
