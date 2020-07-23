@@ -177,6 +177,51 @@ checkpoint를 저장 할 directory를 변수 checkpoint_dir에 적어주면 됩�
 ##### 추후 checkpoint save, restore 그리고 tensorboard 사용 등에 대해서도 자세히 다루도록 하겠습니다!!
 
 ---
+### Train step function
+이전까지 hyper-parameter setting, data pipelining, loss function, optimizer selecting 등에 대한 코드에 대해 설명을 했습니다. 드디어 **학습**과 관련한 코드입니다! 
+
+다음의 코드는 논문의 알고리즘 내에 한 batch step에 대해서 critic(discriminator)과 generator의 loss를 구하고 parameter update하는 코드입니다. 우선 critic을 $n_{critic}=5$번 학습을 하고 generator를 학습하는 것이 한 step이 됩니다. critic의 loop안에서는 RMSProp optimizer를 통해 weights를 업데이트한 이후에 WGAN의 큰 특징 중 하나인 weight clipping을 합니다. weight clipping은  1-Lipschitz constraint를 강제하기 위해 수행됩니다.
+
+코드는 다음과 같습니다.
+```python
+@tf.function
+def train_step(images):
+    for i in range(n): # n_critic 번 critic 학습
+        noise = tf.random.normal([batch_size, noise_dim])
+        with tf.GradientTape() as disc_tape:    # tf.GradientTape()을 이용해 gradient 계산
+            D.training = True
+            
+            generated_images = G(noise)         # G로부터 fake data 생성
+            real_output = D(images)             # 논문 내 f(x^i)
+            fake_output = D(generated_images)   # 논문 내 f(G(z^i))
+            disc_loss = d_loss(real_output, fake_output) # loss 계산
+        
+        # RMSProp(lr = 0.00005)로 학습 진행
+        gradients_of_discriminator = disc_tape.gradient(disc_loss, D.trainable_variables)
+        discriminator_optimizer.apply_gradients(zip(gradients_of_discriminator, D.trainable_variables))
+        
+        # weight clipping
+        disc_weights = discriminator_optimizer.weights  # get critic weights
+        clip_w = [w.assign(tf.clip_by_value(w, -c, c)) for w in disc_weights if w.shape != ()]    # tf.clip_by_value를 통해 [-0.01, 0.01]로 clipping
+    
+    # generator 학습
+    with tf.GradientTape() as gen_tape:
+        noise = tf.random.normal([batch_size, noise_dim])
+        G.training = True
+
+        generated_images = G(noise)             # G로부터 fake data 생성     
+        fake_output = D(generated_images)       # 논문 내 f(G(z^i))
+        gen_loss = g_loss(fake_output)          # loss 계산
+    
+    # RMSProp(lr = 0.00005)로 학습 진행
+    gradients_of_generator = gen_tape.gradient(gen_loss, G.trainable_variables)
+    generator_optimizer.apply_gradients(zip(gradients_of_generator, G.trainable_variables))    
+    
+    return gen_loss, disc_loss
+```
+
+
+---
 ### Dependencies
 ```
 OS         : Ubuntu 18.04
