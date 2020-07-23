@@ -41,6 +41,6 @@ matplotlib : 3.1.1
 ```
 ---
 ### Reference
-- WGAN 논문 - https://arxiv.org/abs/1701.07875
-- 케라스 공식 홈페이지 - https://keras.io/
-- 텐서플로우 공식 홈페이지 - https://www.tensorflow.org/api_docs
+- WGAN 논문 - <https://arxiv.org/abs/1701.07875>
+- 케라스 공식 홈페이지 - <https://keras.io/>
+- 텐서플로우 공식 홈페이지 - <https://www.tensorflow.org/api_docs>
