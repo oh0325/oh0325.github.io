@@ -131,6 +131,34 @@ def g_loss(fake_output):
 ```
 
 ---
+### seed 고정과 결과 이미지 생성
+처음에 결과 이미지를 확인하기 위해 변수 num_examples_to_generate를 16(4*4)로 정의해두었습니다. 고정된 seed에 대해 결과 이미지가 변해가는 과정을 보기 위해서 다음과 같이 seed를 만들어줍니다.
+
+```python
+seed = tf.random.normal([num_examples_to_generate, noise_dim])
+```
+이렇게 만들어 놓은 seed를 사용해 결과화면에 4X4 형태로 보여주고 저장을 하려고 합니다.
+
+```python
+def generate_and_save_images(model, epoch, test_input):
+    predictions = model(test_input)
+
+    fig = plt.figure(figsize=(4,4))
+
+    for i in range(predictions.shape[0]):
+        plt.subplot(4, 4, i+1)
+        plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
+        plt.axis('off')
+
+    plt.savefig('results/image_at_epoch_{:04d}.png'.format(epoch))
+    plt.show()
+```
+코드는 다음과 같으며 tensorflow 공식 홈페이지 내에 예제 코드입니다. 사용하다보니 편리하고 익숙해져서 예제코드의 큰 틀에 벗어나지 않게 코드 작성을 하였습니다.
+
+mnist dataset처럼 흑백이 아닌 컬러 이미지를 dataset으로 사용한다면 `predictions[i, :, :, 0]` 부분의 0을  `predictions[i, :, :, :]` 다음과 같이 :로 바꿔주면 됩니다.
+
+그리고 `cmap='gray'` 인자를 지워주거나 원하는 colormap 값으로 적으면 컬러 이미지 결과를 plot 할 수 있습니다. 
+그리고 `plt.savefig('results/image_at_epoch_{:04d}.png'.format(epoch))`는 결과 영상을 저장하는 코드입니다.
 
 ---
 ### Checkpoint Setting
