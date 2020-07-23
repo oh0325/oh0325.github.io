@@ -20,6 +20,13 @@ toc: false
 ![wgan algorithm](/assets/images/wgan_algo.PNG)
 
 이제 코드와 함께 설명을 하도록 하겠습니다.
+{% capture title_url %}
+
+- 학습은 jupyter notebook 가상환경에서 진행했습니다!
+- 포스트 하단에 dependency에 대한 내용이 있습니다!
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
 
 ---
 ### Module Import
@@ -94,6 +101,10 @@ D.summary()
 summary한 결과는 다음과 같이 나온다. Generator는 약 228만개의 parameter, Discriminator는 1080만개의 parameter를 갖는다. 
 
 ![model_g summary results](/assets/images/g_summary.PNG){: width="48%"}{: .center} ![model_d summary results](/assets/images/d_summary.PNG){: width="48%"}{: .center}
+
+---
+### Checkpoint Setting
+학습 중간중간 일정 epoch마다 
 
 ---
 ### Dependencies
