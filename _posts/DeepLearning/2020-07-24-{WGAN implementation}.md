@@ -22,7 +22,7 @@ toc: false
 이제 코드와 함께 설명을 하도록 하겠습니다.
 {% capture title_url %}
 
-- 학습은 **jupyter notebook** 가상환경에서 진행했습니다!
+- 학습은 가상환경의 **jupyter notebook** 에서 진행했습니다!
 - 포스트 하단에 **dependency**에 대한 내용이 있습니다!
 
 {% endcapture %}
@@ -177,7 +177,7 @@ checkpoint를 저장 할 directory를 변수 checkpoint_dir에 적어주면 됩�
 ##### 추후 checkpoint save, restore 그리고 tensorboard 사용 등에 대해서도 자세히 다루도록 하겠습니다!!
 
 ---
-### Train step function
+### Train step(batch) function
 이전까지 hyper-parameter setting, data pipelining, loss function, optimizer selecting 등에 대한 코드에 대해 설명을 했습니다. 드디어 **학습**과 관련한 코드입니다! 
 
 다음의 코드는 논문의 알고리즘 내에 한 batch step에 대해서 critic(discriminator)과 generator의 loss를 구하고 parameter update하는 코드입니다. 우선 critic을 $n_{critic}=5$번 학습을 하고 generator를 학습하는 것이 한 step이 됩니다. critic의 loop안에서는 RMSProp optimizer를 통해 weights를 업데이트한 이후에 WGAN의 큰 특징 중 하나인 weight clipping을 합니다. weight clipping은  1-Lipschitz constraint를 강제하기 위해 수행됩니다.
@@ -219,7 +219,63 @@ def train_step(images):
     
     return gen_loss, disc_loss
 ```
+train_step은 for문을 통해 critic이 $n_{critic}$번 학습을 먼저하게 됩니다. `discriminator_optimizer.apply_gradients`를 통해 gradient가 update되면 weight clipping을 합니다. 
 
+weight clipping은 우선 `discriminator_optimizer.weights`처럼 optimizer의 weights method나 variables() method를 통해 얻을 수 있습니다. 제일 첫번째 tensor variable은 학습이 몇번째 iteration에 있는지 나타내는 tensor로 shape이 ()입니다. 
+
+따라서 list comprehension을 통해 작성한 코드 `clip_w = [w.assign(tf.clip_by_value(w, -c, c)) for w in disc_weights if w.shape != ()]`를 보면 for문 뒤 조건문 `if w.shape != ()`을 통해 trainable한 weights만 clipping하도록 하였습니다. 
+
+[`tf.clip_by_value()`](https://www.tensorflow.org/api_docs/python/tf/clip_by_value)를 통해 clipping을 했으며 `w.assign()`을 통해 disc_weights를 직접 업데이트 해주었습니다. 
+
+---
+### Training 
+train 함수에서는 dataset과 epochs 값을 입력으로 받아 정해놓은 epoch 값 만큼 학습을 진행합니다. batch마다 얻어진 loss 값을 list에 담고 전체 epoch에 대한 평균 loss를 출력합니다. 그리고 한 epoch이 끝나면 4x4 형태로 결과를 plot하고 저장합니다. 또한 주석처리된 if문 내의 K에 적절한 값을 넣어 K epochs 마다 checkpoint에 모델을 저장할 수 있습니다.
+
+```python
+def train(dataset, epochs):
+    for epoch in range(epochs):
+        start = time.time()
+        
+        gen_loss_list = []
+        disc_loss_list = []
+        
+        for image_batch in train_dataset:
+            loss = train_step(image_batch)
+            gen_loss_list.append(loss[0])
+            disc_loss_list.append(loss[1])
+            
+        # 이미지 생성 및 저장
+        display.clear_output(wait=True)
+        generate_and_save_images(G, epoch + 1, seed)
+        
+        # K epochs 지날 때마다 모델 저장
+        #if (epoch + 1) % K == 0:
+        #    checkpoint.save(file_prefix = checkpoint_prefix)
+    
+        # loss & 시간 출력
+        print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
+        print ('G_Loss is {}, D_Loss is {}'.format(sum(gen_loss_list)/len(gen_loss_list), 
+                                                   sum(disc_loss_list)/len(disc_loss_list)))
+
+    # 학습이 끝난 후 이미지 생성
+    display.clear_output(wait=True)
+    generate_and_save_images(G, epochs, seed)
+```
+저는 학습을 가상환경의 jupyter notebook에서 진행했습니다. 
+
+jupyer cell에서 
+```python 
+%%time
+train(train_dataset, epochs)
+```
+다음 코드를 실행시키면 학습을 진행할 수 있습니다. 
+
+---
+### Results
+다음은 WGAN이 만들어낸 mnist data 결과입니다. 
+1~2 epoch이 지난 이후 서서히 숫자 형태가 나타나고 10 epochs 정도가 지난후엔 꽤 그럴싸한 숫자를 만들어냈습니다. 
+
+![wgan result](/assets/images/wgan_results.gif)
 
 ---
 ### Dependencies
@@ -240,3 +296,6 @@ matplotlib : 3.1.1
 - WGAN 논문 - <https://arxiv.org/abs/1701.07875>
 - 케라스 공식 홈페이지 - <https://keras.io/>
 - 텐서플로우 공식 홈페이지 - <https://www.tensorflow.org/api_docs>
+
+---
+GAN에 대한 Tensorflow 구현을 차근차근 올리도록하겠습니다. 구현에 이상이 있거나 궁금한 내용은 편하게 댓글 달아주세요. 감사합니다.
