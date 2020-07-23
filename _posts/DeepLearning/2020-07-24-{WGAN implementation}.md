@@ -9,6 +9,7 @@ tags:
   - wasserstein gan
   - tensorflow
 comments: true
+use_math: true
 classes: wide
 toc: false
 ---
