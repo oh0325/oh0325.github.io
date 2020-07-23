@@ -263,7 +263,7 @@ def train(dataset, epochs):
 ```
 저는 학습을 가상환경의 jupyter notebook에서 진행했습니다. 
 
-jupyer cell에서 
+jupyter cell에서 
 ```python 
 %%time
 train(train_dataset, epochs)
