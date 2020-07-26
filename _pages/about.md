@@ -9,8 +9,8 @@ sitemap :
 toc: true
 ---
 ## 권주원 (Juwon Kwon)
-![Hello~](asset/../../assets/images/about.jpg){: width=80%}
----
+![Hello~](asset/../../assets/images/about_photo.jpg){: width=80%}
+
 - github : https://github.com/zzu0203
 - blog   : zzu0203.github.io
 - e-mail : 02kjw0203@gmail.com
