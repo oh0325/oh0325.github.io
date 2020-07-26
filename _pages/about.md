@@ -9,11 +9,16 @@ sitemap :
 toc: true
 ---
 ## 권주원 (Juwon Kwon)
+![Hello~](asset/../../assets/images/about.jpg){: width=80%}
 ---
 - github : https://github.com/zzu0203
 - blog   : zzu0203.github.io
 - e-mail : 02kjw0203@gmail.com
 
+### Interst
+- 머신러닝 (Machine Learning)
+- 생성모델 (Generative Model)
+  
 ### Education
 - **광운대학교 (Kwangwoon University)**
   
@@ -38,3 +43,5 @@ toc: true
   Tensorflow, Keras, OpenCV, numpy, matplotlib
 
 ### Patent
+
+### Publications
