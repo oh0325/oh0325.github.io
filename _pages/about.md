@@ -22,14 +22,14 @@ toc: true
 ### Education
 - **광운대학교 (Kwangwoon University)**
   
-  PhD in Electric Engineering, Seoul, KR (2020.3 ~ )
+  PhD in Electronic Engineering, Seoul, KR (2020.3 ~ )
 - **광운대학교 (Kwangwoon University)**
   
-  MS in Electric Engineering, Seoul, KR (2018.3 ~ 2020.2)
+  MS in Electronic Engineering, Seoul, KR (2018.3 ~ 2020.2)
 
 - **광운대학교 (Kwangwoon University)**
 
-  BS in Electric Engineering, Seoul, KR (2014.3 ~ 2018.2)
+  BS in Electronic Engineering, Seoul, KR (2014.3 ~ 2018.2)
 
 ### Skill
 - **os**
