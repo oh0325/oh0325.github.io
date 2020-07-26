@@ -27,13 +27,13 @@ toc: true
   BS in Electric Engineering, Seoul, KR (2014.3 ~ 2018.2)
 
 ### Skill
-- os
+- **os**
   
   Windows, Ubuntu, MacOS
-- language
+- **language**
 
   Python, C/C++
-- framework / library
+- **framework / library**
 
   Tensorflow, Keras, OpenCV, numpy, matplotlib
 
