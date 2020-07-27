@@ -12,6 +12,11 @@ comments: true
 use_math: true
 classes: wide
 toc: false
+date:   2020-07-24 00:00:00 
+lastmod : 2020-07-27 20:30:00
+sitemap :
+  changefreq : daily
+  priority : 1.0
 ---
 ### 논문 [WGAN](https://arxiv.org/abs/1701.07875)에 대한 tensorflow 코드 구현 입니다.
 
