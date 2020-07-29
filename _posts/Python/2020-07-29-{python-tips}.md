@@ -67,3 +67,26 @@ print(f'{total:,}')
 
 ## #3 context manager를 사용하자. (Context Managers)
 
+다음과 같이 text.txt 파일을 불러와 읽는 코드가 있다. 이후에 txt 파일 내의 글을 공백에 따라 split하여 words에 저장하고 words의 수를 출력한다.
+```python
+f = open('test.txt', 'r')
+
+file_contents = f.read()
+
+f.close()
+
+words = file_contents.split(' ')
+word_count = len(words)
+print(word_count)
+```
+이런 코드는 파일을 손수 open하고 사용한 후에 close해줘야 하는 번거로움이 있다.
+아래와 같이 context manager를 사용한 코드는 이러한 번거로움을 줄여준다. 
+```python
+with open('test.txt', 'r') as f:
+    file_contents = f.read()
+
+words = file_contents.split(' ')
+word_count = len(words)
+print(word_count)
+```
+`with open(...) as ...:` 구문안에 필요한 내용을 넣어 사용하면 된다. context manager는 사용이 끝난 리소스의 release를 보장해준다. 
