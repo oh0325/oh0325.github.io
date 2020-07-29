@@ -15,7 +15,7 @@ sitemap :
   changefreq : daily
   priority : 1.0
 ---
-YouTube 영상중 10가지 python tips에 대한 영상이 있어 정리해보았습니다. 
+YouTube 영상 중 10가지 python tips에 대한 내용이 있어 정리해보았습니다. 
 
 REF : [10 Python Tips and Tricks For Writing Better Code](https://www.youtube.com/watch?v=C-gEQdGVXbk)
 ---
@@ -135,7 +135,7 @@ for index, name in enumerate(names, start=1):
 
 {% capture title_url %}
 
-index를 사용하고 싶지 않은 경우 underscore(_)를 이용해 `for _, value in list:`처럼 표현할 수 있다. 
+index를 사용하고 싶지 않은 경우 underscore(_)를 이용해 `for _, value in list:`처럼 표현할 수 있습니다. 
 
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
