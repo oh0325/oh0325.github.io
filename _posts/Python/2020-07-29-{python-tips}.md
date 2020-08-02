@@ -100,7 +100,7 @@ print(word_count)
 
 ## #4 Enumerate를 사용하자. (Enumerate)
 
-python은 다음과 같이 간단하게 어떤것의 loop를 돌 수 있다. 지금은 names라는 리스트의 loop를 도는 것이다. 
+python은 다음과 같이 간단하게 어떤것의 loop를 돌 수 있다. 지금은 names라는 list의 loop를 도는 것이다. 
 ```python
 names =['Corey', 'Chris', 'Dave', 'Travis']
 
@@ -139,3 +139,16 @@ index를 사용하고 싶지 않은 경우 underscore(_)를 이용해 `for _, va
 
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
+
+## #5 Zip을 사용하자. (Zip)
+
+예를들어 두 개의 list의 원소들을 같이 봐야한다고 하자. enumerate를 사용한다면 loop의 index로 다른 list의 원소를 가르킬 수 있다. 
+```python
+names = ['Peter Parker', 'Clark Kent', 'Wade Wilson', 'Bruce Wayne']
+heroes = ['Spiderman', 'Superman', 'Deadpool', 'Batman']
+
+for index, name in enumerate(names):
+    hero = heroes[index]
+    print(f'{name} is actually {hero}')
+```
+위의 코드는 names라는 list를 
