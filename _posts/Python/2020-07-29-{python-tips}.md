@@ -180,3 +180,7 @@ for name, hero, universe in zip(names, heroes, universes):
 
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
+
+---
+
+다음 포스트 [10가지 Python Tips!-(2)]에서는 zip function에 대해 언급하면서 나온 unpacking에 대한 내용부터 정리하겠습니다.
