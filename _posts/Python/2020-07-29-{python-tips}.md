@@ -152,3 +152,23 @@ for index, name in enumerate(names):
     print(f'{name} is actually {hero}')
 ```
 위의 코드는 list `names`를 enumerate를 사용해 loop를 돈다. 이때 index를 통해 list `heroes`의 원소에 접근할 수 있다.
+
+하지만 이런 방법은 직관적이지 않다. 동일한 코드에 대해 python에서는 zip function을 사용하는 것이 더 직관적이다.
+```python
+names = ['Peter Parker', 'Clark Kent', 'Wade Wilson', 'Bruce Wayne']
+heroes = ['Spiderman', 'Superman', 'Deadpool', 'Batman']
+
+for name, hero in zip(names, heroes):
+    print(f'{name} is actually {hero}')
+```
+다음 코드는 enumerate 대신 zip을 사용한 코드로 `zip()`의 인자로 순회하고자 하는 list를 넣어주면 된다. zip function을 사용하며 위 코드와 같이 2개의 list를 한번에 순회할 수 있고 loop를 돌기 전에 unpacking해서 원소들을 묶어줄 수 있다. 이렇게 zip function을 사용하면 훨씬 직관적이고 깔끔한 코드를 작성할 수 있다.
+
+또한 2개가 아닌 더 많은 리스트를 사용할 수도 있다. 밑의 코드는 list `universes`를 추가해 사용하였다.
+```python
+names = ['Peter Parker', 'Clark Kent', 'Wade Wilson', 'Bruce Wayne']
+heroes = ['Spiderman', 'Superman', 'Deadpool', 'Batman']
+universes = ['Marvel', 'DC', 'Marvel', 'DC']
+
+for name, hero, universe in zip(names, heroes, universes):
+    print(f'{name} is actually {hero} from {universe}')
+```
