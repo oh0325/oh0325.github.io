@@ -151,4 +151,4 @@ for index, name in enumerate(names):
     hero = heroes[index]
     print(f'{name} is actually {hero}')
 ```
-위의 코드는 names라는 list를 
+위의 코드는 list `names`를 enumerate를 사용해 loop를 돈다. 이때 index를 통해 list `heroes`의 원소에 접근할 수 있다.
