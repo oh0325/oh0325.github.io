@@ -172,3 +172,11 @@ universes = ['Marvel', 'DC', 'Marvel', 'DC']
 for name, hero, universe in zip(names, heroes, universes):
     print(f'{name} is actually {hero} from {universe}')
 ```
+
+{% capture title_url %}
+
+하지만 zip function은 길이가 다른 list를 사용할 때 가장 길이가 짧은 list를 순회하고 멈춘다. 길이가 가장 긴 list의 끝까지 순회하고 싶다면 [`itertools.zip_longest()`](https://docs.python.org/3/library/itertools.html#itertools.zip_longest)를 사용하면 된다. 
+- `zip_logest(*iterables, fillvalue=None)`의 인자 fillvalue는 순회를 다한 짧은 list에 대해 unpacking value를 default `None`으로 반환합니다. 원하는 value 값을 인자로 넣어주면 됩니다.
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
