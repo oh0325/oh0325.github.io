@@ -108,19 +108,90 @@ print(a)
 
 정답은 `ValueError: too many values to unpack (expected 3)`이라는 error message가 뜬다.
 
-그렇다면 a에는 1을 b에는 2를 c에는 나머지 (3, 4, 5)를 할당하고 싶다면 어떻게 해야할까? 
+그렇다면 a에는 1을 b에는 2를 c에는 나머지 값 '3, 4, 5'를 할당하고 싶다면 어떻게 해야할까? 
 
-다행이도 asterisk를 통해 unpacking은 위의 문제를 해결할 수 있다.
-
+다행이도 `Asterisk(*)`를 통해 unpacking은 위의 문제를 해결할 수 있다.
 
 ```python
+a, b, *c = (1, 2, 3, 4, 5)
+
+print(a)
+print(b)
+print(c)
+```
+결과로 다음과 같이 c에 나머지 값들이 할당되는 것을 확인할 수 있다.
+
+```
+결과 : 
+1
+2
+[3, 4, 5]
 ```
 
-```python
-```
+만약 a, b를 제외한 c를 사용하고 싶지 않다면 마찬가지로 `Underscore(_)`를 사용해주면 된다.
 
 ```python
+a, b, *_ = (1, 2, 3, 4, 5)
+
+print(a)
+print(b)
+# print(c)
 ```
+`Asterisk(*)`와 `Underscore(_)`를 통해서 사용하지 않을 여러개의 변수를 unpacking하는 방법을 알아보았다. 
+
 
 ```python
+a, b, *c, d = (1, 2, 3, 4, 5)
+
+print(a)
+print(b)
+print(c)
+print(d)
+```
+자주 사용하지는 않지만 위와 같은 방법의 unpacking도 가능하다.
+
+결과는 다음과 같이 나온다.
+```
+결과 : 
+1
+2
+[3, 4]
+5
+```
+변수 c에 앞의 2개의 a, b 그리고 마지막 d를 제외한 나머지 값들이 들어가 있는 것을 볼 수 있다.
+
+```python
+a, b, *c, d = (1, 2, 3, 4, 5, 6, 7)
+
+print(a)
+print(b)
+print(c)
+print(d)
+```
+unpacking할 tuple에 값을 더 추가해도 결과는 마찬가지로 변수 앞의 2개 그리고 마지막 d를 제외한 나머지 값들이 들어가 있는 것을 볼 수 있다.
+
+```
+결과 : 
+1
+2
+[3, 4, 5, 6]
+7
+```
+
+물론 가운데 c에 해당하는 값을 사용하고 싶지 않다면 `Underscore(_)`를 사용하면 된다.
+```python
+a, b, *_, d = (1, 2, 3, 4, 5, 6, 7)
+
+print(a)
+print(b)
+# print(c)
+print(d)
+```
+물론 결과는 다음과 같이 가운데 [3, 4, 5, 6] 없이 처음 두개의 값과 마지막 값만 출력된다.
+
+```
+결과 : 
+1
+2
+7
 ```
