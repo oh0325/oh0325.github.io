@@ -19,7 +19,7 @@ YouTube 영상 중 10가지 python tips에 대한 내용이 있어 정리해보�
 
 REF : [10 Python Tips and Tricks For Writing Better Code](https://www.youtube.com/watch?v=C-gEQdGVXbk)
 
-정리 1편 : ['[Python] 10가지 Python Tips!-(1)'](https://zzu0203.github.io/python/python-tips/)
+정리 1편 : [[Python] 10가지 Python Tips!-(1)](https://zzu0203.github.io/python/python-tips/)
 
 ---
 ## #6 Unpacking에 대해 (Unpacking)
@@ -49,3 +49,53 @@ for value in zip(names, heroes, universes):
 
 이제 어떻게 unpacking이 동작하는지 코드와 함께 알아보자. 
 
+```python
+#Normal
+items = (1, 2)
+
+print(items)
+```
+위의 코드는 일반적으로 tuple을 값으로 받은 경우이다.
+
+```python
+#Unpacking
+a, b = (1, 2)
+
+print(a)
+print(b)
+```
+unpacking을 이용해 여러개의 변수로 값을 받을 수 있다. 
+
+```python
+a, b = (1, 2)
+
+print(a)
+# print(b)
+```
+unpacking을 사용하더라고 변수 b를 사용하지 않을 수도 있다. 그렇다면 위의 코드와 같이 주석이나 사용을 하지 않을 것이다. (지금의 경우에는 `print()`) 
+
+하지만 이런식의 코드를 작성하면 IDE나 EDITOR에서 변수 b를 선언했지만 사용하지 않았다는 경고를 할 것이다. 
+
+```python
+```
+python에서 사용하고 싶지 않은 값이 있다면 변수명을 `Underscore(_)`로 사용하면 된다. 
+```python
+```
+
+```python
+```
+
+```python
+```
+
+```python
+```
+
+```python
+```
+
+```python
+```
+
+```python
+```

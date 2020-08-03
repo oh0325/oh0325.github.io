@@ -53,7 +53,7 @@ total = num1 + num2
 
 print(total)
 ```
-아래의 코드처럼 언더바 '_'를 추가하면 가독성을 보장할 수 있다.
+아래의 코드처럼 `Underscore(_)`를 추가하면 가독성을 보장할 수 있다.
 ```python
 num1 = 10_000_000_000
 num2 = 100_000_000
@@ -66,7 +66,7 @@ print(f'{total:,}')
 또한, 출력을 볼 때에도 print함수에 포맷팅을 사용하여 가독성을 늘릴 수 있다.
 {% capture title_url %}
 
-underscore ('_')는 python3.6 이상의 버전에서 사용가능합니다.
+`Underscore(_)`는 python3.6 이상의 버전에서 사용가능합니다.
 
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
