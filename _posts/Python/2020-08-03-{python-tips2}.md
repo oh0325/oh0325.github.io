@@ -77,16 +77,41 @@ unpacking을 사용하더라고 변수 b를 사용하지 않을 수도 있다. �
 하지만 이런식의 코드를 작성하면 IDE나 EDITOR에서 변수 b를 선언했지만 사용하지 않았다는 경고를 할 것이다. 
 
 ```python
-```
-python에서 사용하고 싶지 않은 값이 있다면 변수명을 `Underscore(_)`로 사용하면 된다. 
-```python
+a, _ = (1, 2)
+
+print(a)
+# print(b)
 ```
 
-```python
-```
+python에서 사용하고 싶지 않은 값이 있다면 변수명을 `Underscore(_)`로 사용하면 된다. 즉, 값을 무시하고 싶은 경우 사용하면 되며 다른 사람의 코드를 보다가 `Underscore(_)`변수를 보면 암시적으로 이 값은 사용하지 않는다고 생각하면 된다.
+
+{% capture title_url %}
+
+python에서 `Underscore(_)`가 어떤 상황에서 사용되는지 나중에 정리하고 링크를 남기도록 하겠습니다.
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
 
 ```python
+a, b, c = (1, 2)
+
+print(a)
 ```
+다음과 같이 unpacking하는 값보다 변수가 많다면 `ValueError: not enough values to unpack (expected 3, got 2)`이라는 error message가 뜰 것이다.
+
+```python
+a, b, c = (1, 2, 3, 4, 5)
+
+print(a)
+```
+반대로 다음과 같이 unpacking하는 값이 변수보다 많다면 어떻게 될까?
+
+정답은 `ValueError: too many values to unpack (expected 3)`이라는 error message가 뜬다.
+
+그렇다면 a에는 1을 b에는 2를 c에는 나머지 (3, 4, 5)를 할당하고 싶다면 어떻게 해야할까? 
+
+다행이도 asterisk를 통해 unpacking은 위의 문제를 해결할 수 있다.
+
 
 ```python
 ```
