@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "WGAN - tensorflow/keras implementation"
+title: "WGAN - Tensorflow/Keras Implementation"
 categories:
   - DeepLearning
 tags:
