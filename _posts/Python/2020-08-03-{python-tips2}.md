@@ -195,3 +195,5 @@ print(d)
 2
 7
 ```
+
+## #7 (Setattr/Getattr)
