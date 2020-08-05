@@ -196,4 +196,5 @@ print(d)
 7
 ```
 
-## #7 (Setattr/Getattr)
+## #7 Setting 속성과 Getting 속성 (setattr/getattr)
+
