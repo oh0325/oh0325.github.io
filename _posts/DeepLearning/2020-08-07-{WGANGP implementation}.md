@@ -64,11 +64,20 @@ batch size ($m$) = 64로 이전 [wgan 구현 포스트](https://zzu0203.github.i
 
 따라서 같은 값으로 parameter들을 설정합니다.
 ```python
-
+learning_rate = 0.0001  # alpha
+gp_lambda = 10          # gradient penalty coefficient
+n_critic = 5
+b_1 = 0                 # Adam arg beta1
+b_2 = 0.9               # Adam arg beta2
+epochs = 50
+batch_size = 64
+noise_dim = 100
+num_examples_to_generate = 16
+BUFFER_SIZE = 60000     # mnist buffer size
 ```
 ---
 ### Data Load
-데이터셋은 mnist dataset을 사용했으며 추후 다른 데이터 셋에 대해 실험한 결과를 추가하도록 하겠습니다. 
+데이터셋은 mnist dataset을 사용했습니다. 
 
 ```python
 (train_images, _), (_, _) = mnist.load_data()
@@ -83,38 +92,112 @@ train_dataset = tf.data.Dataset.from_tensor_slices(train_images).shuffle(BUFFER_
 models.py에서 불러온 model들을 확인해봅시다. 각 model들은 클래스 형태로 network을 구성하였습니다. model에 적절한 size의 Input을 넣고 model을 summary 합니다.
 
 ```python
+# model load
 G = Generator_mnist()
 D = Discriminator_mnist()
 
-input1 = keras.Input(shape=(noise_dim)) # noise_dim = 100
+input1 = keras.Input(shape=(100))
 input2 = keras.Input(shape=(28, 28, 1))
 
-fakeout = G(input1)
-realout = D(input2)
+x1 = G(input1)
+x2 = D(input2)
 
 G.summary()
 D.summary()
 ```
 
+Models Summary 결과 입니다.
 
-![model_g summary results](/assets/images/g_summary.PNG){: width="48%"}{: .center} ![model_d summary results](/assets/images/d_summary.PNG){: width="48%"}{: .center}
+Generator
+```
+Model: "generator_mnist"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense (Dense)                (None, 12544)             1266944   
+_________________________________________________________________
+batch_normalization (BatchNo (None, 12544)             50176     
+_________________________________________________________________
+reshape (Reshape)            (None, 7, 7, 256)         0         
+_________________________________________________________________
+conv2d_transpose (Conv2DTran (None, 14, 14, 256)       590080    
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 14, 14, 256)       1024      
+_________________________________________________________________
+re_lu (ReLU)                 (None, 14, 14, 256)       0         
+_________________________________________________________________
+conv2d_transpose_1 (Conv2DTr (None, 14, 14, 128)       295040    
+_________________________________________________________________
+batch_normalization_2 (Batch (None, 14, 14, 128)       512       
+_________________________________________________________________
+re_lu_1 (ReLU)               (None, 14, 14, 128)       0         
+_________________________________________________________________
+conv2d_transpose_2 (Conv2DTr (None, 28, 28, 64)        73792     
+_________________________________________________________________
+batch_normalization_3 (Batch (None, 28, 28, 64)        256       
+_________________________________________________________________
+re_lu_2 (ReLU)               (None, 28, 28, 64)        0         
+_________________________________________________________________
+conv2d_transpose_3 (Conv2DTr (None, 28, 28, 1)         577       
+_________________________________________________________________
+activation (Activation)      (None, 28, 28, 1)         0         
+=================================================================
+Total params: 2,278,401
+Trainable params: 2,252,417
+Non-trainable params: 25,984
+_________________________________________________________________
+```
+
+Discriminator
+```
+Model: "discriminator_mnist"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 13, 13, 128)       1280      
+_________________________________________________________________
+leaky_re_lu (LeakyReLU)      (None, 13, 13, 128)       0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 6, 6, 256)         295168    
+_________________________________________________________________
+batch_normalization_4 (Batch (None, 6, 6, 256)         1024      
+_________________________________________________________________
+leaky_re_lu_1 (LeakyReLU)    (None, 6, 6, 256)         0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 3, 3, 512)         2097664   
+_________________________________________________________________
+batch_normalization_5 (Batch (None, 3, 3, 512)         2048      
+_________________________________________________________________
+leaky_re_lu_2 (LeakyReLU)    (None, 3, 3, 512)         0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 2, 2, 1024)        8389632   
+_________________________________________________________________
+batch_normalization_6 (Batch (None, 2, 2, 1024)        4096      
+_________________________________________________________________
+leaky_re_lu_3 (LeakyReLU)    (None, 2, 2, 1024)        0         
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 2, 2, 1)           16385     
+_________________________________________________________________
+flatten (Flatten)            (None, 4)                 0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 5         
+=================================================================
+Total params: 10,807,302
+Trainable params: 10,803,718
+Non-trainable params: 3,584
+_________________________________________________________________
+```
 
 ---
-### Optimizer - RMSProp
+### Optimizer - Adam
 
 
 ```python
-
+# Set optimizer
+generator_optimizer = keras.optimizers.Adam(learning_rate, beta_1 = b_1, beta_2 = b_2)
+discriminator_optimizer = keras.optimizers.Adam(learning_rate, beta_1 = b_1, beta_2 = b_2)
 ```
 
-
----
-### Loss Functions
-
-
-```python
-
-```
 
 ---
 ### seed 고정과 결과 이미지 생성
@@ -126,9 +209,20 @@ seed = tf.random.normal([num_examples_to_generate, noise_dim])
 이렇게 만들어 놓은 seed를 사용해 결과화면에 4X4 형태로 보여주고 저장을 하려고 합니다.
 
 ```python
+def generate_and_save_images(model, epoch, test_input):
+    predictions = model(test_input)
 
+    fig = plt.figure(figsize=(4,4))
+
+    for i in range(predictions.shape[0]):
+        plt.subplot(4, 4, i+1)
+        # mnist
+        plt.imshow(predictions[i, :, :, 0] * 0.5 + 0.5, cmap='gray')
+        plt.axis('off')
+
+    plt.savefig('results/image_at_epoch_{:04d}.png'.format(epoch))
+    plt.show()
 ```
-
 
 ---
 ### Checkpoint Setting
@@ -145,17 +239,95 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
 
 
 ---
-### Train step(batch) function
-
+### Train step function & Loss
+#### Discriminator step
 ```python
+def discriminator_train_step(images):
+    len_batch = len(images)
+    noise = tf.random.normal([len_batch, noise_dim])
+    
+    with tf.GradientTape() as disc_tape:
+        D.training = True
+        generated_images = G(noise)
+        real_output = D(images)
+        fake_output = D(generated_images)
+    
+        #wgan loss
+        disc_loss = K.mean(fake_output) - K.mean(real_output)
+        eps = tf.random.uniform(shape=[len_batch, 1, 1, 1])
+        x_hat = eps*images + (1 - eps)*generated_images
+        
+        with tf.GradientTape() as t:
+            t.watch(x_hat)
+            d_hat = D(x_hat)
+        gradients = t.gradient(d_hat, [x_hat])
+        l2_norm = K.sqrt(K.sum(K.square(gradients), axis=[2,3]))
+        l2_norm = K.squeeze(l2_norm, axis=0)
+        gradient_penalty = K.sum(K.square((l2_norm-1.)), axis=[1])
+        disc_loss += gp_lambda*gradient_penalty
+                
+    gradients_of_discriminator = disc_tape.gradient(disc_loss, D.trainable_variables)
+    discriminator_optimizer.apply_gradients(zip(gradients_of_discriminator, D.trainable_variables))
+    
+    return K.sum(disc_loss)
 
 ```
+#### Generator step
 
+```python
+def generator_train_step(images):
+    noise = tf.random.normal([batch_size, noise_dim])
+
+    with tf.GradientTape() as gen_tape:
+        G.training = True
+        generated_images = G(noise)
+        fake_output = D(generated_images)
+        
+        #wgan loss
+        gen_loss = - K.mean(fake_output)
+    
+    gradients_of_generator = gen_tape.gradient(gen_loss, G.trainable_variables)
+    generator_optimizer.apply_gradients(zip(gradients_of_generator, G.trainable_variables))    
+    
+    return K.sum(gen_loss)
+```
 
 ---
 ### Training 
 
 ```python
+def train(dataset, epochs):
+    for epoch in range(epochs):
+        start = time.time()
+        
+        gen_loss_list = []
+        disc_loss_list = []
+        
+        for image_batch in train_dataset:
+            loss_d = 0
+            for i in range(n_critic):
+                loss_d += discriminator_train_step(image_batch)
+            loss_g = generator_train_step(image_batch)
+        
+            gen_loss_list.append(loss_g)
+            disc_loss_list.append(loss_d / n_critic)
+            
+        # 이미지 생성
+        display.clear_output(wait=True)
+        generate_and_save_images(G, epoch + 1, seed)
+        
+        # 15 epochs 지날 때마다 모델 저장
+        if (epoch + 1) % 15 == 0:
+            checkpoint.save(file_prefix = checkpoint_prefix)
+    
+        # loss & 시간 출력
+        print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
+        print ('G_Loss is {}, D_Loss is {}'.format(sum(gen_loss_list)/len(gen_loss_list), 
+                                                   sum(disc_loss_list)/len(disc_loss_list)))
+
+    # 학습이 끝난 후 이미지 생성
+    display.clear_output(wait=True)
+    generate_and_save_images(G, epochs, seed)
 ```
 저는 학습을 가상환경의 jupyter notebook에서 진행했습니다. 
 
