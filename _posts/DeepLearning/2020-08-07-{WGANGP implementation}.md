@@ -19,7 +19,7 @@ sitemap :
   changefreq : daily
   priority : 1.0
 ---
-### 논문 [WGAN-GP](https://arxiv.org/abs/1704.00028)에 대한 tensorflow 코드 구현 입니다.
+### 논문 [WGAN-GP : Improved Training of Wasserstein GANs](https://arxiv.org/abs/1704.00028)에 대한 tensorflow 코드 구현 입니다.
 
 구현은 논문 4 페이지에 있는 아래의 **Algorithm 1**을 참고하였습니다.
 
@@ -215,7 +215,7 @@ discriminator_optimizer = keras.optimizers.Adam(learning_rate, beta_1 = b_1, bet
 ```python
 seed = tf.random.normal([num_examples_to_generate, noise_dim])
 ```
-이렇게 만들어 놓은 seed를 사용해 결과화면에 4X4 형태로 보여주고 저장을 하려고 합니다.
+이렇게 만들어 놓은 seed를 사용해 결과화면에 4X4 형태로 보여주고 저장을 하려고 합니다. 결과 이미지가 저장되는 경로는 `plt.savefig()`의 인자에 명시된 `results/` 폴더에 저장됩니다.
 
 ```python
 def generate_and_save_images(model, epoch, test_input):
@@ -249,6 +249,10 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
 
 ---
 ### Train step function & Loss
+
+이번 WGAN-GP 논문구현에서는 이전의 WGAN 구현과 다르게 따로 loss function을 함수로 만들지 않고 각 네트워크의 학습 step안에 정의했습니다.
+
+우선 Discriminator step 먼저 설명하겠습니다.
 #### Discriminator step
 ```python
 def discriminator_train_step(images):
@@ -263,13 +267,15 @@ def discriminator_train_step(images):
     
         #wgan loss
         disc_loss = K.mean(fake_output) - K.mean(real_output)
+
         eps = tf.random.uniform(shape=[len_batch, 1, 1, 1])
         x_hat = eps*images + (1 - eps)*generated_images
         
         with tf.GradientTape() as t:
             t.watch(x_hat)
             d_hat = D(x_hat)
-        gradients = t.gradient(d_hat, [x_hat])
+
+        gradients = t.gradient(d_hat, [x_hat])  # gradients 계산
         l2_norm = K.sqrt(K.sum(K.square(gradients), axis=[2,3]))
         l2_norm = K.squeeze(l2_norm, axis=0)
         gradient_penalty = K.sum(K.square((l2_norm-1.)), axis=[1])
@@ -279,7 +285,6 @@ def discriminator_train_step(images):
     discriminator_optimizer.apply_gradients(zip(gradients_of_discriminator, D.trainable_variables))
     
     return K.sum(disc_loss)
-
 ```
 #### Generator step
 
