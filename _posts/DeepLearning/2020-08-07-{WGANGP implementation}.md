@@ -256,16 +256,49 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
 
 ![disc_step](/assets/images/wgan_gp_algo1.PNG)
 
-우선 $\tilde{x}$ $\gets$ $G$<sub>$\theta$</sub>($z$) 는 `noise`를 입력으로 G가 만들어낸 fake images로 코드상 `generated_images = G(noise)`에 해당합니다.
+{% capture title_url %}
 
-$\hat{x}$ $\gets$ $\epsilon$$x$ + (1 - $\epsilon$)
+논문의 저자는 batch norm을 critic의 single input -> single output 맵핑 문제를 batch inputs -> batch outputs로 바꾸는 문제가 있으며 각 입력에 대해 독립적으로 penalty를 가하기 위해 사용하지 않았습니다. 물론 알고리즘 상에서도 나타나 있습니다. 
 
+하지만 코드 상에서는 batch에 대해 for loop를 더 사용하지 않고 이미지 tensor의 제일 앞에 차원을 추가해 개별적인 penalty를 가함에는 변함이 없도록 하였습니다.
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
+
+우선 $x$는 real data distribution에서 추출한 sample이며 `images`의 image batch 입니다.
+
+$\tilde{x}$ $\gets$ $G$<sub>$\theta$</sub>($z$) 는 `noise`를 입력으로 G가 만들어낸 fake images로 코드상 `generated_images = G(noise)`에 해당합니다.
+
+$\hat{x}$ $\gets$ $\epsilon$$x$ + (1 - $\epsilon$)$\tilde{x}$ 는 sample $x$와 $\tilde{x}$의 내분점입니다. 이때 $\epsilon$은 `tf.random.uniform(shape=[len_batch, 1, 1, 1])`로 얻어진 random number입니다.
+
+Loss term을 보면 $L$<sup>$(i)$</sup> $\gets$ $D$<sub>$w$</sub>($\tilde{x}$) - $D$<sub>$w$</sub>($x$) + $\lambda$( $\lVert$ $\nabla$<sub>$\hat{x}$</sub>$D$<sub>$w$</sub>($\hat{x}$) $\rVert$<sub>2</sub> - 1 )<sup>2</sup> 이며 앞의 $D$<sub>$w$</sub>($\tilde{x}$) - $D$<sub>$w$</sub>($x$) 는 WGAN loss function과 동일하며 `disc_loss = K.mean(fake_output) - K.mean(real_output)` 로 계산됩니다. 
+
+이제 Gradient Penalty term $\lambda$( $\lVert$ $\nabla$<sub>$\hat{x}$</sub>$D$<sub>$w$</sub>($\hat{x}$) $\rVert$<sub>2</sub> - 1 )<sup>2</sup> 을 하나씩 보며 설명하겠습니다. 우선 앞서 선언한 `eps`를 통해 `x_hat` : $\epsilon$$x$ + (1 - $\epsilon$)$\tilde{x}$를 구하면 `eps*images + (1 - eps)*generated_images`가 됩니다.
+tensorflow의 `GradientTape()`을 이용해 gradient $\nabla$<sub>$\hat{x}$</sub>$D$<sub>$w$</sub>($\hat{x}$) 를 구합니다. 해당하는 부분의 코드는 아래와 같습니다.
+
+```python
+with tf.GradientTape() as t:
+    t.watch(x_hat)
+    d_hat = D(x_hat)
+
+gradients = t.gradient(d_hat, [x_hat])
+```
+코드는 [텐서플로우 공식 홈페이지](https://www.tensorflow.org/tutorials/customization/autodiff?hl=ko)에서 자세히 알수 있습니다. 
+
+{% capture title_url %}
+
+간단히 설명을 하면 `t.gradient(d_hat, [x_hat])`는 `x_hat`에 대한 도함수를 구하는 코드입니다.
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
+
+이후에 `l2_norm`을 `K.sqrt(K.sum(K.square(gradients), axis=[2,3]))`로 구할 수 있으며 이때 `K.sum()`의 `axis=[2,3]`인 이유는 
 
 #### Discriminator step
 ```python
 def discriminator_train_step(images):
-    len_batch = len(images)
-    noise = tf.random.normal([len_batch, noise_dim])
+    len_batch = len(images)    # 마지막 batch에서의 length를 맞춰주기 위함
+    noise = tf.random.normal([len_batch, noise_dim]) 
     
     with tf.GradientTape() as disc_tape:
         D.training = True
