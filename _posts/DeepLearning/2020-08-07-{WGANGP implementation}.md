@@ -252,7 +252,15 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
 
 이번 WGAN-GP 논문구현에서는 이전의 WGAN 구현과 다르게 따로 loss function을 함수로 만들지 않고 각 네트워크의 학습 step안에 정의했습니다.
 
-우선 Discriminator step 먼저 설명하겠습니다.
+우선 Discriminator step 먼저 설명하겠습니다. 설명드릴 코드는 [for t = 1,...,$n$<sub>$critic$</sub> do ... end for] 내의 for loop부터 weight update까지의 내용이며 Algorithm1 일부를 캡처한 부분입니다. $n$<sub>$critic$</sub>번 학습시키는 코드는 `train` 함수 내에 구현되어 있습니다.
+
+![disc_step](./assets/images/wagn_gp_algo1.PNG)
+
+우선 $\tilde{x}$ $\gets$ $G$<sub>$\theta$</sub>($z$) 는 `noise`를 입력으로 G가 만들어낸 fake images로 코드상 `generated_images = G(noise)`에 해당합니다.
+
+$\hat{x}$ $\gets$ $\epsilon$$x$ + (1 - $\epsilon$)
+
+
 #### Discriminator step
 ```python
 def discriminator_train_step(images):
