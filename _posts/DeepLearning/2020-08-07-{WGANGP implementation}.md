@@ -85,7 +85,12 @@ train_images = train_images.reshape(train_images.shape[0], 28, 28, 1).astype('fl
 train_images = (train_images - 127.5) / 127.5 # image normalization [-1, 1]
 train_dataset = tf.data.Dataset.from_tensor_slices(train_images).shuffle(BUFFER_SIZE).batch(batch_size)
 ```
+mnist dataset은 숫자 0~9까지 60000개의 (28, 28, 1) shape을 갖는 흑백 이미지입니다. WGAN을 학습할 때 train label, validation set은 필요하지 않으므로 _ 로 사용하지 않음을 표시해줍니다.
 
+불러온 6만장의 train_images는 (60000, 28, 28)의 shape을 하고 있으므로 마지막에 채널을 추가하기 위해 (60000, 28, 28, 1)의 shape으로 reshape을 합니다.
+Generator의 마지막 activation function을 tanh로 사용했기에 image의 값을 [-1, 1]로 normalization 해줍니다. 
+
+이렇게 얻어진 train_images를 tensorflow에서 지원하는 tf.data.Dataset을 사용해 batch 별로 Dataset object를 만들어줍니다.
 
 ---
 ### Model(G, D) Load & Summary
@@ -108,7 +113,7 @@ D.summary()
 
 Models Summary 결과 입니다.
 
-Generator
+**Results of Generator**
 ```
 Model: "generator_mnist"
 _________________________________________________________________
@@ -147,8 +152,10 @@ Trainable params: 2,252,417
 Non-trainable params: 25,984
 _________________________________________________________________
 ```
+약 228만개의 parameters를 갖는 것을 볼 수 있으며 우리의 target data mnist data의 shape과 동일한 (28, 28, 1)의 이미지를 만들어냅니다.
 
-Discriminator
+
+**Results of Discriminator**
 ```
 Model: "discriminator_mnist"
 _________________________________________________________________
@@ -187,10 +194,12 @@ Trainable params: 10,803,718
 Non-trainable params: 3,584
 _________________________________________________________________
 ```
+discriminator는 입력으로 (batch size, 28, 28, 1) 크기의 데이터를 받습니다. dense layer를 통해 출력값을 얻었습니다. 전체 parameter 수는 약 1081만개 입니다.
 
 ---
 ### Optimizer - Adam
 
+Optimizer로는 논문의 Algorithm과 동일하게 Adam을 사용하였으며 Adam의 learning rate와 hyperparameters $\beta$<sub>1</sub>, $\beta$<sub>2</sub> 는 각각 0.0001, 0, 0.9를 사용했습니다.
 
 ```python
 # Set optimizer
