@@ -283,7 +283,7 @@ with tf.GradientTape() as t:
 
 gradients = t.gradient(d_hat, [x_hat])
 ```
-코드는 [텐서플로우 공식 홈페이지](https://www.tensorflow.org/tutorials/customization/autodiff?hl=ko)에서 자세히 알수 있습니다. 
+코드는 [텐서플로우 공식 홈페이지](https://www.tensorflow.org/tutorials/customization/autodiff?hl=ko)에서 자세히 알 수 있습니다. 
 
 {% capture title_url %}
 
@@ -292,7 +292,9 @@ gradients = t.gradient(d_hat, [x_hat])
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
 
-이후에 `l2_norm`을 `K.sqrt(K.sum(K.square(gradients), axis=[2,3]))`로 구할 수 있으며 이때 `K.sum()`의 `axis=[2,3]`인 이유는 
+이후에 `l2_norm`을 `K.sqrt(K.sum(K.square(gradients), axis=[2,3]))`로 구할 수 있으며 이때 `K.sum()`의 `axis=[2,3]`인 이유는 각 batch에 해당하는 축과 이미지의 채널에 해당하는 축을 제외한 2차원에 대해서 norm을 구하기 위해서 입니다. 그 이후에 `K.squeeze(l2_norm, axis=0)`처럼 squeeze를 통해 차원을 하나 줄이는데 그 이유는 입력 `l2_norm`의 차원이 (1, batch, 1)로 들어오기 때문에 (batch, 1)로 만들기위해 사용합니다. 
+
+그리고 `gradient_penalty = K.sum(K.square((l2_norm-1.)), axis=[1])`를 통해 1을 빼고 제곱을 했던 최종적인 penalty를 구할 수 있으며 $\lambda$를 곱해주고 기존의 wgan loss에 더해줘 최종적으로 `disc_loss += gp_lambda*gradient_penalty`로 구현할 수 있습니다.
 
 #### Discriminator step
 ```python
@@ -327,8 +329,10 @@ def discriminator_train_step(images):
     
     return K.sum(disc_loss)
 ```
+
 #### Generator step
 
+Generator의 경우 Discriminator에 비해 비교적 간단하게 구현할 수 있으며 단지 WGAN loss term만 있으면 됩니다. 따라서 `gen_loss = - K.mean(fake_output)`로 간단히 loss를 구하고 optimizer를 통해 train step을 진행할 수 있습니다.
 ```python
 def generator_train_step(images):
     noise = tf.random.normal([batch_size, noise_dim])
@@ -349,7 +353,7 @@ def generator_train_step(images):
 
 ---
 ### Training 
-
+train 함수에서는 dataset과 epochs 값을 입력으로 받아 정해놓은 epoch 값 만큼 학습을 진행합니다. batch마다 얻어진 loss 값을 list에 담고 전체 epoch에 대한 평균 loss를 출력합니다. critic의 경우 generator 학습 이전에 먼저 $n$<sub>critic</sub>번 for loop를 통해 학습하고 loss는 $n$<sub>critic</sub>로 나눠줘 평균을 취해줍니다. 그리고 한 epoch이 끝나면 4x4 형태로 결과를 plot하고 저장합니다. 또한 주석처리된 if문 내의 K에 적절한 값을 넣어 K epochs 마다 checkpoint에 모델을 저장할 수 있습니다.
 ```python
 def train(dataset, epochs):
     for epoch in range(epochs):
@@ -371,8 +375,8 @@ def train(dataset, epochs):
         display.clear_output(wait=True)
         generate_and_save_images(G, epoch + 1, seed)
         
-        # 15 epochs 지날 때마다 모델 저장
-        if (epoch + 1) % 15 == 0:
+        # K epochs 지날 때마다 모델 저장
+        if (epoch + 1) % K == 0:
             checkpoint.save(file_prefix = checkpoint_prefix)
     
         # loss & 시간 출력
@@ -395,8 +399,7 @@ train(train_dataset, epochs)
 
 ---
 ### Results
-다음은 WGAN이 만들어낸 mnist data 결과입니다. 
-1~2 epoch이 지난 이후 서서히 숫자 형태가 나타나고 10 epochs 정도가 지난후엔 꽤 그럴싸한 숫자를 만들어냈습니다. 
+다음은 WGAN-GP를 통해 얻은 mnist data 결과입니다. 놀랍게도 1 epoch만에 숫자를 만들어 냈으며 이후로 점차 선명하고 진한 숫자를 만들어냈습니다. 학습은 약 50 epochs을 진행하였고 각 epoch에 대한 결과를 통해 만들어진 gif 입니다.
 
 ![wgan result](/assets/images/wgan_gp_results.gif)
 
