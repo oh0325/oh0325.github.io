@@ -6,6 +6,7 @@ categories:
 tags:
   - data structure
 comments: true  
+use_math: true
 classes: wide
 toc: false
 date:   2020-09-02 00:00:00 
