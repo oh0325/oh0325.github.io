@@ -39,7 +39,7 @@ GPU상에서 deep learning model들을 학습하다보면 OOM(Out Of Memory) err
 
 Width * Height * 3(size of image channels) * batch_size * 32 bits를 계산하면 된다.
 
-예를들어 `32*32*3`의 크기를 갖는 rgb image를 사용하고 batch size가 32라고 한다면 `32 * 32 * 3 * 32(batch size) * 32 bits` $\approx$ `3MB`
+예를들어 `32*32*3`의 크기를 갖는 rgb image를 사용하고 batch size가 32라고 한다면 32 * 32 * 3 * 32(batch size) * 32 bits $\approx$ 3MB
 
 {% capture title_url %}
 
