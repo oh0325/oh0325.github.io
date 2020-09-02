@@ -31,3 +31,20 @@ sitemap :
 {% endcapture %}
 <div class="notice--info">{{ title_url | markdownify }}</div>
 
+### Data의 Memory 계산
+
+GPU상에서 deep learning model들을 학습하다보면 OOM(Out Of Memory) error가 발생하는 경우가 많다. 보통 batch size를 줄이거나 model의 size를 줄이는 등의 방법으로 문제를 해결한다.
+
+학습에 사용하는 batch size의 데이터들이 얼마나 메모리를 갖고 있는지 다음과 같이 확인한다.
+
+Width * Height * 3(size of image channels) * batch_size * 32 bits를 계산하면 된다.
+
+예를들어 `32*32*3`의 크기를 갖는 rgb image를 사용하고 batch size가 32라고 한다면 `32 * 32 * 3 * 32(batch size) * 32 bits` $\approx$ `3MB`
+
+{% capture title_url %}
+
+  **뒤에 32 bits를 곱하는 이유**
+  data type을 float32라고 가정했을 때 float32 수 하나를 표현하기 위해 4 bytes의 메모리가 필요하다. 1 byte가 8 bits이므로 32bits를 곱해 계산한다. 
+
+{% endcapture %}
+<div class="notice--info">{{ title_url | markdownify }}</div>
