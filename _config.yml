@@ -118,9 +118,9 @@ author:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url: "https://twitter.com/"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/profile.php?id=100001676894394"
+#    - label: "Facebook"
+#      icon: "fab fa-fw fa-facebook-square"
+#      url: "https://www.facebook.com/profile.php?id=100001676894394"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/oh0325"
@@ -135,12 +135,12 @@ footer:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url:
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/profile.php?id=100001676894394"
+#    - label: "Facebook"
+#      icon: "fab fa-fw fa-facebook-square"
+#      url: "https://www.facebook.com/profile.php?id=100001676894394"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/zzu0203"
+      url: "https://github.com/oh0325"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
@@ -149,7 +149,7 @@ footer:
       # url:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://www.instagram.com/zzu02_03/"
+      url: "https://www.instagram.com/5jaekwang/"
 
 
 # Reading Files
