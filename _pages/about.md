@@ -1,6 +1,6 @@
 ---
 permalink: /about/
-title: "About"
+title: "About me"
 date:   2021-01-03 23:02:00 
 lastmod : 2021-01-03 23:02:00
 sitemap :
@@ -9,7 +9,7 @@ sitemap :
 toc: true
 ---
 ## 오재광
-![Hello~](asset/../../assets/images/cafe_me.jpg){: width=80%}
+![Hello~](asset/../../assets/images/cafe_me.jpg){: width=80% , height = 50%}
 
 - github   : https://github.com/oh0325
 - blog     : oh0325.github.io
