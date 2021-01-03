@@ -1,12 +1,12 @@
 ---
 layout: archive
-title: "Posts by 영상처리"
+title: "Posts by Image Processing"
 permalink: /categories/imgprocessing
 author_profile: true
 toc: true
 ---
 {% for category in site.categories %}
-  {% if category[0] == "영상처리" %}
+  {% if category[0] == "Image Processing" %}
     {% for post in category[1] %}
       {% include archive-single.html type=list %}
     {% endfor %}

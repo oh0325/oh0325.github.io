@@ -1,25 +1,19 @@
 # main links
 main:
-  - title: "About"
+  - title: "About me"
     url: /about/
-  - title: "Category"
+  - title: "Categorys"
     url: /categories/
   #- title: "Tags"
   #  url: /tags/
 docs:
-  - title: "Python"
-    url: "/categories/python"
   - title: "DeepLearning"
     url: "/categories/DeepLearning"
-  - title: "Papers"
-    url: "/categories/Papers"
-  - title: "Blog"
-    url: "/categories/Blog"
-  - title: "영상처리"
+  - title: "Image Processing"
     url: "/categories/imgprocessing"
-  - title: "알고리즘 문제 풀이"
+  - title: "Programming_C++"
     url: "/categories/algorithm"
-  - title: "필기노트"
+  - title: "Programming_Python"
     url: "/categories/note"
-  - title: "그 외"
+  - title: "Another Things"
     url: "/categories/etc"
