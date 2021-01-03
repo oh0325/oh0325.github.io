@@ -16,20 +16,20 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "ko"
-title                    : "ZZU's BLOG"
+title                    : "ohjk's Records"
 title_separator          : "-"
-name                     : "ZZU's BLOG"
-description              : "공부했던 내용을 정리하고 남기는 블로그입니다^^"
-url                      : "https://zzu0203.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+name                     : "My Records"
+description              : "꾸준하게 하는게 목표입니다."
+url                      : "https://ohjk0325.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "zzu0203/zzu0203.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "oh0325/ohjk0325.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
   provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "staticman_v2", "utterances", "custom"
   disqus:
-    shortname            : "zzu0203" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname            : "ohjk" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -103,53 +103,53 @@ analytics:
 
 # Site Author
 author:
-  name             : "Kwon juwon"
-  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "공부한 내용을 정리하고 기록하는 블로그입니다^^"
+  name             : "Oh jaekwang"
+  avatar           : "" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "꾸준하게 하는게 목표입니다."
   location         : "Seoul, Kwangwoon Univ."
-  email            : "02kjw0203@gmail.com"
+  email            : "dhworhkd11@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       #url: "mailto:02kjw0203@gmail.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
+#    - label: "Website"
+#      icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
+#    - label: "Twitter"
+#      icon: "fab fa-fw fa-twitter-square"
       # url: "https://twitter.com/"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/profile.php?id=100001676894394"
+#    - label: "Facebook"
+#      icon: "fab fa-fw fa-facebook-square"
+#      url: "https://www.facebook.com/profile.php?id=100001676894394"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/zzu0203"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://www.instagram.com/zzu02_03/"
+      url: "https://www.instagram.com/oh0325/"
 
 
 # Site Footer
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
+#    - label: "Twitter"
+#      icon: "fab fa-fw fa-twitter-square"
       # url:
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/profile.php?id=100001676894394"
+#    - label: "Facebook"
+#      icon: "fab fa-fw fa-facebook-square"
+#      url: "https://www.facebook.com/profile.php?id=100001676894394"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/zzu0203"
-    - label: "GitLab"
-      icon: "fab fa-fw fa-gitlab"
+      url: "https://github.com/oh0325"
+#    - label: "GitLab"
+#      icon: "fab fa-fw fa-gitlab"
       # url:
-    - label: "Bitbucket"
-      icon: "fab fa-fw fa-bitbucket"
+#    - label: "Bitbucket"
+#      icon: "fab fa-fw fa-bitbucket"
       # url:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://www.instagram.com/zzu02_03/"
+      url: "https://www.instagram.com/oh0325/"
 
 
 # Reading Files
