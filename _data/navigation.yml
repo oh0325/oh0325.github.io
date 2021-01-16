@@ -15,5 +15,7 @@ docs:
     url: "/categories/algorithm"
   - title: "Programming_Python"
     url: "/categories/note"
+  - title: "Papers"
+    url: "/categories/papers"
   - title: "Another Things"
     url: "/categories/etc"
