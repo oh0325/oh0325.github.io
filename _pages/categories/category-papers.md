@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Posts by Papers"
-permalink: /categories/Papers
+permalink: /categories/papers
 author_profile: true
 toc: true
 ---
