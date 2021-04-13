@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Posts by  Programming_Python"
-permalink: /categories/programming_Python
+permalink: /categories/Programming_Python
 author_profile: true
 toc: true
 ---

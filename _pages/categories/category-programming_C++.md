@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Posts by  Programming_C++"
-permalink: /categories/programming_C++
+permalink: /categories/Programming_C++
 author_profile: true
 toc: true
 ---

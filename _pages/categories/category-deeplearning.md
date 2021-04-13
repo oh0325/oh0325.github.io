@@ -1,12 +1,12 @@
 ---
 layout: archive
 title: "Posts by DeepLearning"
-permalink: /categories/Deeplearning
+permalink: /categories/DeepLearning
 author_profile: true
 toc: true
 ---
 {% for category in site.categories %}
-  {% if category[0] == "Deeplearning" %}
+  {% if category[0] == "DeepLearning" %}
     {% for post in category[1] %}
       {% include archive-single.html type=list %}
     {% endfor %}
