@@ -9,7 +9,7 @@ sitemap :
 toc: true
 ---
 ## 오재광
-![Hello~](asset/../../assets/images/cafe_me.jpg){: width=80% , height = 50%}
+![Hello~](asset/../../assets/images/AboutMe/cafe_me.jpg){: width=80% , height = 50%}
 
 - github   : https://github.com/oh0325
 - blog     : oh0325.github.io

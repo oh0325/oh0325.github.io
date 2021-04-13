@@ -1,12 +1,12 @@
 ---
 layout: archive
-title: "Posts by Another Things"
+title: "Posts by Other Things"
 permalink: /categories/etc
 author_profile: true
 toc: true
 ---
 {% for category in site.categories %}
-  {% if category[0] == "Another Things" %}
+  {% if category[0] == "Other Things" %}
     {% for post in category[1] %}
       {% include archive-single.html type=list %}
     {% endfor %}
