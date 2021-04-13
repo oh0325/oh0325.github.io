@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Posts by DeepLearning"
-permalink: /categories/deepLearning
+permalink: /categories/Deeplearning
 author_profile: true
 toc: true
 ---

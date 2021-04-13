@@ -2,13 +2,13 @@
 main:
   - title: "About me"
     url: /about/
-  - title: "Categorys"
+  - title: "Categories"
     url: /categories/
   #- title: "Tags"
   #  url: /tags/
 docs:
   - title: "DeepLearning"
-    url: "/categories/DeepLearning"
+    url: "/categories/Deeplearning"
   - title: "Image Processing"
     url: "/categories/imgprocessing"
   - title: "Programming_C++"
